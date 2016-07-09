@@ -1,0 +1,28 @@
+<script type="text/javascript">
+function sendForm()
+ {
+  var output = document.getElementById("output");
+  var data = new FormData(document.getElementById("fileupload"));
+  var url= "hdfs://13.76.84.84:9000/user/tem/web/data";
+  data.append("CustomField", "This is my custom data");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, false)
+  xhr.send(data);
+  if (xhr.status == 200) {
+    output.innerHTML += "Uploaded!<br />";
+  } else {
+    output.innerHTML += "Error " + xhr.status + " occurred uploading your file.<br />";
+  }
+};
+
+</script>
+<body>
+<form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+  <fieldset>
+    <input type="file" name="fileselect" id="fileselect"></input>
+    <input id="uploadbutton" type="button" value="Upload to Parse"/>
+  </fieldset>
+
+<a href="javascript:sendForm()">Upload File</a>
+</form>

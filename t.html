@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>D3 Try</title>
+<script type="text/javascript" src="d3.min.js"></script>
+
+</head>
+
+<style>
+
+.node {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 2px;
+}
+
+.link {
+    stroke: #777;
+    stroke-width: 2px;
+}
+
+    </style>
+<body style="background-color: red">
+
+<h2>Hello world</h2>
+
+<script type="text/javascript">
+
+var height=500,width=960;
+
+// If we leave  out the x and y coordinates of the visualization, d3 selects 
+// random positions for the nodes
+
+// nodes are arbitrary objects
+
+var nodes = [ {x: width/3, y: height/2 } , {x: 2*width/3, y: height/2} ];
+
+// Define the array which contains information about the links
+
+var links= [ {source: 0, target: 1}];
+
+
+// container to hold the visualisation
+
+var svg=d3.select('body').append('svg').attr('width',width).attr('height',height);
+
+// Create force layout object which contains dimensions of the container and 
+// the arrays of nodes and links
+
+
+var force=d3.layout.force().size([width,height]).nodes(nodes).links(links);
+
+
+
+// Documentation says that define a function in place of width/2 but fir bhi , how?
+
+
+force.linkDistance(width/2);
+
+
+
+var link=svg.selectAll('.link').data(links).enter().append('line').attr('class','link');
+
+var node=svg.selectAll('.node').data(nodes).enter().append('circle').attr('class','node');
+
+
+
+force.on('end',function(){ 
+
+
+
+
+node.attr('r', width/25)
+        .attr('cx', function(d) { return d.x; })
+        .attr('cy', function(d) { return d.y; });
+
+
+
+link.attr('x1', function(d) { return d.source.x; })
+        .attr('y1', function(d) { return d.source.y; })
+        .attr('x2', function(d) { return d.target.x; })
+        .attr('y2', function(d) { return d.target.y; });
+
+
+});
+
+
+force.start();
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
+
